@@ -16,18 +16,7 @@ app.use(morgan(morganOption))
 app.use(express.json());
 app.use(helmet())
 
-const address = [
-  {
-    // id: 'UUID',
-    // firstName: 'String',
-    // lastName: 'String',
-    // address1: 'String',
-    // address2: String,
-    // city: String,
-    // state: String,
-    // zip: Number
-  }
-]
+const address = []
 
 app.get('/address', (req, res) => {
   res.send(address)
@@ -72,8 +61,13 @@ app.post('/address', (req, res) => {
       .status(400)
       .send('State must be exactly 2 characters long')
   }
+<<<<<<< HEAD
 
   if (zip.length !== 5 || typeof parseInt(zip) !== 'number') {
+=======
+  
+  if (zip.length !== 5 || isNaN(parseInt(zip))) {
+>>>>>>> c89425b5bcf86de496f110e849a90df4968f038f
     return res
       .status(400)
       .send('Zip must be exactly 5 digits long')
@@ -98,6 +92,25 @@ app.post('/address', (req, res) => {
     .location(`http://localhost:8000/address/${id}`)
     .json(newAddress)
 
+})
+
+app.delete('/address/:addressId', (req, res) => {
+    const { addressId } = req.params;
+    const index = address.findIndex(u => u.id === addressId)
+    if(index === -1) {
+      return res
+        .status(404)
+        .send('Address not found')
+    }
+    address.splice(index, 1)
+    res
+      .status(204)
+      .end()
+});
+
+app.get('/address', (req, res) => {
+  res
+    .json(address)
 })
 app.use(function errorHandler(error, req, res, next) {
   let response
