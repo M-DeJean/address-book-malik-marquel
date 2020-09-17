@@ -22,7 +22,19 @@ app.get('/address', (req, res) => {
   res.send(address)
 })
 
-app.post('/address', (req, res) => {
+function validateBearerToken (req, res, next) {
+  
+  const apiToken = process.env.API_TOKEN;
+  const authToken = req.get('Authorization');
+  console.log('Validate Bearer Token middleware');
+  
+  if(!authToken || authToken.split(' ')[1] !== apiToken){
+    return res.status(401).json({error: 'Unauthorized Request'});
+  }
+  next();
+};
+
+app.post('/address', validateBearerToken, (req, res) => {
   const { firstName, lastName, address1, address2 = '', city, state, zip } = req.body
 
   //VALIDATION
@@ -89,7 +101,7 @@ app.post('/address', (req, res) => {
 
 })
 
-app.delete('/address/:addressId', (req, res) => {
+app.delete('/address/:addressId', validateBearerToken, (req, res) => {
     const { addressId } = req.params;
     const index = address.findIndex(u => u.id === addressId)
     if(index === -1) {
