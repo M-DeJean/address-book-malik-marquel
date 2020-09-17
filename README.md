@@ -1,26 +1,28 @@
-# Express Boilerplate!
+## POST and DELETE Requests: Assignment
 
-This is a boilerplate project used for starting new projects!
+* Start a new project called `address-book` from your Express Boilerplate
+* This app will store contact information in the following format:
 
-## Set up
+```
+{
+  id: UUID,
+  firstName: String,
+  lastName: String,
+  address1: String,
+  address2: String,
+  city: String,
+  state: String,
+  zip: Number
+}
+```
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
-
-1. Clone this repository to your local machine `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
-
-## Scripts
-
-Start the application `npm start`
-
-Start nodemon for the application `npm run dev`
-
-Run the tests `npm test`
-
-## Deploying
-
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's master branch.
+* Create a GET route on `/address` that fetches all addresses
+* Create a POST route on `/address` that creates a new address
+  * The new record should have the following validations:
+    * `id` is auto generated
+    * ALL fields except `address2` are required
+    * `state` must be exactly two characters
+    * `zip` must be exactly a five-digit number
+    * you DON’T need to validate if the state/zip are “real”
+* Create a DELETE route on `/address/:id`
+* Add Bearer Token Authorization middleware on ONLY the POST/DELETE routes
