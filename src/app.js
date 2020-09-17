@@ -61,13 +61,8 @@ app.post('/address', (req, res) => {
       .status(400)
       .send('State must be exactly 2 characters long')
   }
-<<<<<<< HEAD
-
-  if (zip.length !== 5 || typeof parseInt(zip) !== 'number') {
-=======
   
   if (zip.length !== 5 || isNaN(parseInt(zip))) {
->>>>>>> c89425b5bcf86de496f110e849a90df4968f038f
     return res
       .status(400)
       .send('Zip must be exactly 5 digits long')
