@@ -37,7 +37,6 @@ function validateBearerToken (req, res, next) {
 app.post('/address', validateBearerToken, (req, res) => {
   const { firstName, lastName, address1, address2 = '', city, state, zip } = req.body
 
-  //VALIDATION
   if (!firstName) {
     return res
       .status(400)
